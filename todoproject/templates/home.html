@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!--Here we are going to add a banner-->
+            <div class="container-fluid">
+                <div class="row">
+            <!--        Taking the full 12 divisions to display the banner-->
+                    <div class="col-md-12"></div>
+            <!--        Creating a class banner-->
+                    <div class="banner">
+                        <div class="banner-text">
+                            <h1> <b>TASKS ToDo</b></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--Placing them inside a container-->
+<div class="container">
+    <div class="row">
+                <!--        taking a row and using the 6 divisions and displaying only the placeholders on the right side-->
+                        <div class="col-md-6">
+                       <form method="post" class="p-3 shadow">
+                         {% csrf_token %}
+                           <div class="form-group">
+                            <input type="text" class="form-control" name="task" placeholder="Task name">
+                           </div><br>
+                           <div class="form-group">
+                            <input type="text" class="form-control" name="priority" placeholder="Enter your priority">
+                           </div><br>
+                           <div class="form-group">
+                            <input type="date" class="form-control" name="date" placeholder="Enter the date">
+                           </div>
+                           <input type="submit" class="btn btn-success" >
+                       </form>
+                        </div>
+                                <!--        Here we are going to display the tasks to the right side ,so remaining 6 from 12(col-md-6 we are using.
+                                Looping through the tasks and display it with adding a shadow to the card-->
+                                            <div class="col-md-6">
+                                                <h4 style="color:#f50707;"><b>Tasks To Be Completed</b></h4>
+                                                     {% for i in task1 %}
+                                                <div class="shadow card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{i.name}}</h5>
+                                                        <p><b>{{i.priority}}</b></p>
+                                                         <p><b>{{i.date}}</b></p>
+<!--                                                        to go to the delete page when clicking the Done button-->
+                                                        <a class="btn btn-danger" href="{% url 'delete' i.id %}">Done</a>
+<!--                                                        adding the update buton in the home page-->
+                                                         <a class="btn btn-success" href="{% url 'update' i.id %}">Update</a>
+
+                                                    </div>
+                                                </div><br>
+                                                {% endfor %}
+                                            </div>
+
+</div>
+    </div>
+{% endblock %}
